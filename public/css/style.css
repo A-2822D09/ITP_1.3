@@ -1,0 +1,58 @@
+
+body {
+
+    color: #fff;
+    background-color: #000;
+
+}
+
+body > h1 {
+
+    margin-bottom: 8px;
+
+}
+
+.location {
+
+    width: 200px;
+    
+}
+
+p.copyright {
+    
+    margin-top: 0;
+
+}
+
+input[type="text"] {
+
+    color: #fff;
+    background-color: #000;
+
+    border: 0;
+
+    outline: none;
+    
+    font-size: 18px;
+
+}
+
+p.text {
+
+    margin-bottom: 0;
+
+}
+
+p.resulttext {
+
+    margin-top: 0;
+    margin-bottom: 16px;
+
+}
+
+::selection {
+
+    color: #000;
+    background-color: #fff;
+
+}
