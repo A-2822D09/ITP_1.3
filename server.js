@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
                     default:
                         let NoSlashArg = arg.replace("/", "");
                         io.emit("result", text, new Date().toLocaleString(NoSlashArg));
+                    break;
                 }
             break;
 
