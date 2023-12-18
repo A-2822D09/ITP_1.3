@@ -23,7 +23,7 @@ sel("#input").addEventListener("keydown", (e) => {
 
 })
 
-socket.on("result", (returnText, result, argN) => {
+socket.on("result", (returnText, result, frontproc) => {
 
     let ifnull = true;
 
@@ -39,33 +39,41 @@ socket.on("result", (returnText, result, argN) => {
     resultElem.className = "resulttext";
 
     try {
-        if (argN[0] === "eval") {
-            resultElem.textContent = eval(argN[1]);
+        switch (frontproc[0]) {
+            case "eval":
+                resultElem.textContent = eval(frontproc[1]);
+            break;
+
+            case "reload":
+                location.reload();
+                return;
+            break; //ある方が綺麗だから書いとく
+
+            case "bgcolor":
+                document.body.style.backgroundColor = frontproc[1];
+                sel("#input").style.backgroundColor = frontproc[1];
+            break;
+
+            case "color":
+                document.body.style.color = frontproc[1];
+                sel("#input").style.color = frontproc[1];
+            break;
+
+            case "cmdindex":
+                open("../commandindex");
+            break;
+
+            case "open":
+                open(frontproc[1], "_blank");
+            break;
         }
-        if (argN[0] === "reload") {
-            location.reload();
-            return;
-        }
-        if (argN[0] === "color") {
-            document.body.style.color = argN[1];
-            sel("#input").style.color = argN[1];
-        }
-        if (argN[0] === "bgcolor") {
-            document.body.style.backgroundColor = argN[1];
-            sel("#input").style.backgroundColor = argN[1];
-        }
-        // if (argN[0] === "encode") {
-        //     if (argN[2] === "/asc2") {
-        //         resultElem.textContent = btoa(argN[1]);
-        //     } else if (argN[2] === "/uri") {
-        //         resultElem.textContent = encodeURIComponent(argN[1]);
-        //     }
-        // }
     } catch (error) {
         // No Processing
     }
 
     ifnull ? sel(".result").appendChild(textElem) : true;
     sel(".result").appendChild(resultElem);
+
+    window.scrollTo(0, document.body.scrollHeight)
 
 })

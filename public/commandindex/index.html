@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/indexStyle.css">
+    <title>ITP 1.2 のコマンドの一覧</title>
+</head>
+<body>
+    <h1>ITP 1.2 のコマンドの一覧</h1>
+    <main>
+        <div class="explain">
+            <p>ITP 1.2 のコマンドの一覧です。構文の記号の意味は下記の通りです。</p>
+            <p>() | 必須では無いものです。</p>
+            <p>&lt;&gt; | 複数の選択肢があります。</p>
+            <p>* | 特別な例外や注記があります。</p>
+        </div>
+        <hr>
+        <div id="time">
+            <h3>time (/&lt;arguments&gt;)</h3>
+            <p>時刻を表示します。</p>
+            <p>引数を指定しなかった場合、出力は YYYY-MM-DDTHH:MM:SS.mmmZ 形式で行われます。例: 2023-12-09T17:49:00.000Z</p>
+            <p><span class="arg">arguments</span></p>
+            <p>言語コードを指定してください。例: /ja, /en-us</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">time</p>
+                    <p class="code">time <span class="codearg">/ja</span></p>
+                    <p class="code">time <span class="codearg">/en-us</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="eval">
+            <h3>eval `&lt;text&gt;` /&lt;arguments&gt;</h3>
+            <p>入力された文字列をJavaScriptのコードとして解釈し、実行します。 <b>このコマンドの使用は推奨しません。</b></p>
+            <p><span class="arg">text</span></p>
+            <p>JavaScriptのコードとして解釈する文字列です。</p>
+            <p><span class="arg">arguments</span></p>
+            <p>実行をフロント側かサーバー側で行うかを指定します。</p>
+            <p>値は front または server のみ使用できます。</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">eval <span class="codestring">`alert("hello world!")`</span> <span class="codearg">/front</span></p>
+                    <p class="code">eval <span class="codestring">`new Date().toLocaleString("ar")`</span> <span class="codearg">/server</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="echo">
+            <h3>echo `&lt;text&gt;`</h3>
+            <p>入力された文字列を表示します。</p>
+            <p>バッククォートで囲われた文字列以外は無視されます。</p>
+            <p><span class="arg">text</span></p>
+            <p>表示したい文字列です。文字参照やASCII文字列( \n など)は使用できません。</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">echo <span class="codestring">`Hello world!`</span></p>
+                </code>
+            </div>
+            <p>このような記述もできますが、混乱を招く可能性があるためおすすめしません。</p>
+            <div class="examplecode bad">
+                <p class="lang bad">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">echo <span class="codestring">`Hello world!\n`</span><span class="return">// => Hello world!\n</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="reload">
+            <h3>reload</h3>
+            <p>ページを再更新し、リセットします。</p>
+        </div>
+        <div id="bgcolor">
+            <h3>bgcolor &lt;HEXcode&gt;</h3>
+            <p>背景色を変更します。</p>
+            <p><span class="arg">HEXcode</span></p>
+            <p>3桁の HEX カラーコードです。例: #000</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">bgcolor <span class="codestring">#000</span></p>
+                </code>
+            </div>
+            <div class="examplecode bad">
+                <p class="lang bad">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">bgcolor <span class="codestring">#000000</span></p>
+                    <p class="code">bgcolor <span class="codestring">rgb(0, 0, 0)</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="color">
+            <h3>color &lt;HEXcode&gt;</h3>
+            <p>文字色を変更します。</p>
+            <p><span class="arg">HEXcode</span></p>
+            <p>3桁の HEX カラーコードです。例: #fff</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">color <span class="codestring">#000</span></p>
+                </code>
+            </div>
+            <div class="examplecode bad">
+                <p class="lang bad">ITP 1.0 ~</p>
+                <hr>
+                <code>
+                    <p class="code">color <span class="codestring">#000000</span></p>
+                    <p class="code">color <span class="codestring">rgb(0, 0, 0)</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="help">
+            <h3>help</h3>
+            <p>ヘルプを表示します。</p>
+        </div>
+        <div id="encode">
+            <h3>encode `&lt;text&gt;` /&lt;arguments&gt;</h3>
+            <p>入力された文字列をエンコードします。エンコードの形式は引数で指定します。</p>
+            <p><span class="arg">text</span></p>
+            <p>エンコードする文字列です。</p>
+            <p><span class="arg">arguments</span></p>
+            <p>エンコードの形式です。現在使用できるエンコード形式は下記の通りです。</p>
+            <p>asc2 (ASCII エンコード) , uri (URI エンコード)</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.1 ~</p>
+                <hr>
+                <code>
+                    <p class="code">encode <span class="codestring">`Hello world!`</span> <span class="codearg">/asc2</span><span class="comment">// => SGVsbG8gd29ybGQh</span></p>
+                    <p class="code">encode <span class="codestring">`あいうえお`</span> <span class="codearg">/uri</span><span class="comment">// => %E3%81%82%E3%81%84%E3%81%86%...</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="decode">
+            <h3>decode `&lt;text&gt;` /&lt;arguments&gt;</h3>
+            <p>入力された文字列をデコードします。デコードの形式は引数で指定します。</p>
+            <p><span class="arg">text</span></p>
+            <p>デコードする文字列です。</p>
+            <p><span class="arg">arguments</span></p>
+            <p>デコードの形式です。現在使用できるデコードの形式は下記の通りです。</p>
+            <p>asc2 (ASCII デコード) , uri (URI デコード)</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.1 ~</p>
+                <hr>
+                <code>
+                    <p class="code">decode <span class="codestring">`SGVsbG8gd29ybGQh`</span> <span class="codearg">/asc2</span><span class="comment">// => Hello world!</span></p>
+                    <p class="code">decode <span class="codestring">`%E3%81%82%E3%81%84%E3%81%86%...`</span> <span class="codearg">/uri</span><span class="comment">// => あいうえお</span></p>
+                </code>
+            </div>
+        </div>
+        </div>
+        <div id="commandindex">
+            <h3>commandindex</h3>
+            <p>このコマンドの一覧を開きます。</p>
+        </div>
+        <div id="open">
+            <h3>open `&lt;URL&gt;`</h3>
+            <p>入力されたURLを開きます。</p>
+            <p class="dbline">
+                <b>※注意:</b>&ensp;JavaScriptの仕様上、<span class="arg">open `www.example.com`</span>&ensp;のように入力すると、<span class="arg">(URL)/www.example.com/</span>&ensp;に遷移されてしまいます。<br>
+                これを回避するためにURLの先頭には<span class="arg">http://</span>&ensp;または<span class="arg">https://</span>&ensp;を付けてください。
+            </p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.2 ~</p>
+                <hr>
+                <code>
+                    <p class="code">open <span class="codestring">`https://www.example.com`</span></p>
+                </code>
+            </div>
+            <div class="examplecode bad">
+                <p class="lang">ITP 1.2 ~</p>
+                <hr>
+                <code>
+                    <p class="code">open <span class="codestring">`www.example.com`</span><span class="comment">// => (URL)/www.example.com</span></p>
+                </code>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>(c) K128 2023</p>
+        <p>最終更新: 2023/12/18</p>
+    </footer>
+</body>
+</html>

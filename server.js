@@ -1,5 +1,6 @@
 
 const express = require("express");
+const { clearInterval } = require("timers");
 const app = express();
 
 const server = require("http").createServer(app);
@@ -23,7 +24,7 @@ io.on("connection", (socket) => {
 
         switch (true){
 
-            case text.includes("time"):
+            case !!text.match(/^time/):
                 let arg = text.match(/\/.+/);
                 try {
                     arg = arg.toString();
@@ -42,7 +43,7 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("eval"):
+            case !!text.match(/^eval/):
                 let evalText = text.match(/\`.+\`/);
                 let evalarg = text.match(/ \/.+$/)
 
@@ -77,7 +78,7 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("echo"):
+            case !!text.match(/^echo/):
                 let echotext = text.match(/\`.+\`/);
                 try {
                     echotext = echotext.toString();
@@ -93,7 +94,7 @@ io.on("connection", (socket) => {
             break;
 
 
-            case text.includes("reload"):
+            case !!text.match(/^reload/):
                 if(text.match(/^reload$/)){
                     io.emit("result", text, null, ["reload"]);
                 }else if(text.match(/\/.*/)){
@@ -105,7 +106,7 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("bgcolor"):
+            case !!text.match(/^bgcolor/):
                 let bgcolorval = text.match(/ #[0-9A-Fa-f]{3}$/);
                 try {
                     bgcolorval = bgcolorval.toString();
@@ -119,7 +120,7 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("color"):
+            case !!text.match(/^color/):
                 let colorval = text.match(/ #[0-9A-Fa-f]{3}$/);
                 try {
                     colorval = colorval.toString();
@@ -133,27 +134,35 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("help"):
+            case !!text.match(/^help/):
                 let help = [
-                    "time /[arguments] | 時刻を表示します。",
-                    "eval \`(JavaScript code)\` /[front, server] | 入力された文字列をJavaScriptのコードとして解釈し、実行します。",
-                    "echo \`(text)\` | 入力された文字列を表示します。",
+                    "time /<arguments> | 時刻を表示します。",
+                    "eval \`<text>\` /<arguments> | 入力された文字列をJavaScriptのコードとして解釈し、実行します。",
+                    "echo \`<text>\` | 入力された文字列を表示します。",
                     "reload | ページを再更新し、リセットします。",
-                    "bgcolor (3 digits HEX color code) | 背景色を変更します。",
-                    "color (3 digits HEX color code) | 文字色を変更します。",
+                    "bgcolor <HEXcode> | 背景色を変更します。",
+                    "color <HEXcode> | 文字色を変更します。",
                     "help | このヘルプを表示します。",
-                    "encode /[asc2, uri] | 文字列をエンコードします。",
-                    "decode /[asc2, uri] | 文字列をデコードします。"
+                    "encode \`<text>\` /<arguments> | 文字列をエンコードします。",
+                    "decode \`<text>\` /<arguments> | 文字列をデコードします。",
+                    "commandindex | コマンドの一覧を開きます。"
                 ]
-                
-                for (let count = 0; count <= help.length; count++){
-                    count !== 0 ? io.emit("result", null, help[count]) : io.emit("result", text, help[count]);
+            
+                {
+                    let count = 0;
+
+                    const interval = setInterval(() => {
+                        count !== 0 ? io.emit("result", null, help[count]) : io.emit("result", text, help[count]);
+                        count++;
+                        if(count === help.length) clearInterval(interval);
+                    }, 5);
                 }
+
             break;
 
 
 
-            case text.includes("encode"):
+            case !!text.match(/^encode/):
                 let encodeText = text.match(/\`.+\`/);
                 let encodearg = text.match(/ \/.+$/)
 
@@ -196,7 +205,7 @@ io.on("connection", (socket) => {
 
 
 
-            case text.includes("decode"):
+            case !!text.match(/^decode/):
                 let decodeText = text.match(/\`.+\`/);
                 let decodearg = text.match(/ \/.+$/);
 
@@ -236,6 +245,23 @@ io.on("connection", (socket) => {
                 }
             break;
 
+
+            case !!text.match(/^commandindex/):
+                io.emit("result", text, "コマンドの一覧を開きました。", ["cmdindex"]);
+            break;
+
+            case !!text.match(/^open/):
+                let openurl = text.match(/\`.+\`/);
+                try {
+                    openurl = openurl.toString();
+                    openurl = openurl.replace(/\`/g, "")
+                    io.emit("result", text, `${openurl}を開きました。`, ["open", openurl]);
+                } catch {
+                    openurl = null;
+                    io.emit("result", text, "URLを指定してください。")
+                }
+            break;
+                
             default:
                 io.emit("result", text, `'${text}'はコマンドとして認識されていません。`);
             break;

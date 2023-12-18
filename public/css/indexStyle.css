@@ -1,0 +1,83 @@
+
+body {
+    color: #fff;
+    background-color: #000;
+}
+
+h1 {
+    background-color: #000;
+    margin: 0;
+    padding: 16px 8px;
+    position: sticky;
+    top: 0;
+}
+
+.dbline {
+    line-height: 32px;
+}
+
+#eval b {
+    border-bottom: 2px solid #fff;
+}
+
+footer {
+    text-align: center;
+}
+
+main :not(.explain, p, hr, h3, .examplecode, li, ul){
+    margin-bottom: 48px;
+}
+
+.arg {
+    background-color: #121212;
+    padding: 2px 8px;
+    border: none;
+    border-radius: 4px;
+}
+
+.examplecode {
+    background-color: #121212;
+
+    margin: 16px 0;
+    padding: 8px 0;
+    border-radius: 4px;
+
+    width: 480px;
+}
+
+.examplecode.bad {
+    background-color: #f022;
+}
+
+.examplecode p.lang {
+    margin: 0;
+    padding: 0 0 0 16px;
+}
+
+.examplecode.bad p.lang::before {
+    content: url(../img/cross.png);
+    margin-right: 8px;
+}
+
+.examplecode hr {
+    border: #555 solid 1px;
+}
+
+.examplecode code p.code {
+    margin: 0;
+    padding:  8px 0 8px 16px;
+}
+
+.codearg {
+    color: #d99;
+}
+
+.codestring {
+    color: #5f5;
+}
+
+.comment {
+    color: gray;
+
+    margin-left: 32px;
+}
