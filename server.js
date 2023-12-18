@@ -38,7 +38,6 @@ io.on("connection", (socket) => {
                     default:
                         let NoSlashArg = arg.replace("/", "");
                         io.emit("result", text, new Date().toLocaleString(NoSlashArg));
-                    break;
                 }
             break;
 
@@ -146,7 +145,8 @@ io.on("connection", (socket) => {
                     "help | このヘルプを表示します。",
                     "encode \`<text>\` /<arguments> | 文字列をエンコードします。",
                     "decode \`<text>\` /<arguments> | 文字列をデコードします。",
-                    "commandindex | コマンドの一覧を開きます。"
+                    "commandindex | コマンドの一覧を開きます。",
+                    "help `<URL>` | 入力されたURLを開きます。"
                 ]
             
                 {
