@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/indexStyle.css">
-    <title>ITP 1.2 のコマンドの一覧</title>
+    <title>ITP 1.3 のコマンドの一覧</title>
 </head>
 <body>
-    <h1>ITP 1.2 のコマンドの一覧</h1>
+    <h1>ITP 1.3 のコマンドの一覧</h1>
     <main>
         <div class="explain">
-            <p>ITP 1.2 のコマンドの一覧です。構文の記号の意味は下記の通りです。</p>
+            <p>ITP 1.3 のコマンドの一覧です。構文の記号の意味は下記の通りです。</p>
             <p>() | 必須では無いものです。</p>
-            <p>&lt;&gt; | 複数の選択肢があります。</p>
+            <p>&lt;&gt; | 複数の選択肢がある、または変数です。</p>
             <p>* | 特別な例外や注記があります。</p>
         </div>
         <hr>
@@ -67,7 +67,7 @@
                 <p class="lang bad">ITP 1.0 ~</p>
                 <hr>
                 <code>
-                    <p class="code">echo <span class="codestring">`Hello world!\n`</span><span class="return">// => Hello world!\n</span></p>
+                    <p class="code">echo <span class="codestring">`Hello world!\n`</span><span class="comment"> // => Hello world!\n</span></p>
                 </code>
             </div>
         </div>
@@ -165,7 +165,7 @@
             <p>入力されたURLを開きます。</p>
             <p class="dbline">
                 <b>※注意:</b>&ensp;JavaScriptの仕様上、<span class="arg">open `www.example.com`</span>&ensp;のように入力すると、<span class="arg">(URL)/www.example.com/</span>&ensp;に遷移されてしまいます。<br>
-                これを回避するためにURLの先頭には<span class="arg">http://</span>&ensp;または<span class="arg">https://</span>&ensp;を付けてください。
+                これを回避するためにURLの先頭には<span class="arg">http://</span>&ensp;または&ensp;<span class="arg">https://</span>&ensp;を付けてください。
             </p>
             <div class="examplecode">
                 <p class="lang">ITP 1.2 ~</p>
@@ -182,10 +182,32 @@
                 </code>
             </div>
         </div>
+        <div id="useragent">
+            <h3>useragent /&lt;arguments&gt;</h3>
+            <p>ユーザーエージェントを表示します。</p>
+            <p><span class="arg">arguments</span></p>
+            <p>アクセス時のユーザーエージェントを表示する際は&ensp;log&ensp;を、現在のユーザーエージェントを表示する際は&ensp;now&ensp;を指定してください。</p>
+            <div class="examplecode">
+                <p class="lang">ITP 1.2 ~</p>
+                <hr>
+                <code>
+                    <p class="code">useragent <span class="codearg">/log</span></p>
+                    <p class="code">useragent <span class="codearg">/now</span></p>
+                </code>
+            </div>
+        </div>
+        <div id="commandhistory">
+            <h3>commandhistory</h3>
+            <p>コマンドの履歴を表示します。履歴の保持は本ページを閉じるまで有効です。</p>
+        </div>
+        <div id="savehistory">
+            <h3>savehistory</h3>
+            <p>コマンドの履歴をcookieに保存します。有効期間は3日です。</p>
+        </div>
     </main>
     <footer>
         <p>(c) K128 2023</p>
-        <p>最終更新: 2023/12/18</p>
+        <p>最終更新: 2023/12/20</p>
     </footer>
 </body>
 </html>

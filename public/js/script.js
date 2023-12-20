@@ -1,5 +1,5 @@
 
-const socket = io();
+const commandHistory = [];
 
 function sel(val) {
     return document.querySelector(val);
@@ -9,6 +9,12 @@ function create(elem) {
     return document.createElement(elem);
 }
 
+function write(text) {
+    let writeElem = create("p")
+    writeElem.textContent = text;
+    sel(".result").appendChild(writeElem);
+}
+
 sel("#input").addEventListener("keydown", (e) => {
 
     let text = sel("#input")
@@ -16,6 +22,8 @@ sel("#input").addEventListener("keydown", (e) => {
     if(e.key === "Enter" && text.value){
 
         socket.emit("cmd", text.value);
+
+        commandHistory.push(text.value)
 
         text.value = "";
 
@@ -65,6 +73,20 @@ socket.on("result", (returnText, result, frontproc) => {
 
             case "open":
                 open(frontproc[1], "_blank");
+            break;
+
+            case "userAgent":
+                resultElem.textContent = navigator.userAgent;
+            break;
+
+            case "commandhistory":
+                sel(".result").appendChild(textElem);
+                commandHistory.forEach(text => write(text));
+                return;
+            break; // また綺麗だから書いとく
+
+            case "savehistory":
+                document.cookie = `commandhistory=${commandHistory};max-age=259200`
             break;
         }
     } catch (error) {

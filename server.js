@@ -20,6 +20,12 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
 
+    let userAgent;
+
+    socket.on("userAgent", (data) => {
+        userAgent = data;
+    })
+
     socket.on("cmd", (text) => {
 
         switch (true){
@@ -94,7 +100,7 @@ io.on("connection", (socket) => {
             break;
 
 
-            case !!text.match(/^reload/):
+            case !!text.match(/^reload\s*$/):
                 if(text.match(/^reload$/)){
                     io.emit("result", text, null, ["reload"]);
                 }else if(text.match(/\/.*/)){
@@ -134,7 +140,7 @@ io.on("connection", (socket) => {
 
 
 
-            case !!text.match(/^help/):
+            case !!text.match(/^help\s*$/):
                 let help = [
                     "time /<arguments> | 時刻を表示します。",
                     "eval \`<text>\` /<arguments> | 入力された文字列をJavaScriptのコードとして解釈し、実行します。",
@@ -146,7 +152,10 @@ io.on("connection", (socket) => {
                     "encode \`<text>\` /<arguments> | 文字列をエンコードします。",
                     "decode \`<text>\` /<arguments> | 文字列をデコードします。",
                     "commandindex | コマンドの一覧を開きます。",
-                    "help `<URL>` | 入力されたURLを開きます。"
+                    "help `<URL>` | 入力されたURLを開きます。",
+                    "useragent /<arguments> | ユーザーエージェントを表示します。",
+                    "commandindex | コマンドの履歴を表示します。",
+                    "savehistory | コマンドの履歴を保存します。"
                 ]
             
                 {
@@ -247,9 +256,12 @@ io.on("connection", (socket) => {
             break;
 
 
-            case !!text.match(/^commandindex/):
+
+            case !!text.match(/^commandindex\s*$/):
                 io.emit("result", text, "コマンドの一覧を開きました。", ["cmdindex"]);
             break;
+
+
 
             case !!text.match(/^open/):
                 let openurl = text.match(/\`.+\`/);
@@ -261,6 +273,35 @@ io.on("connection", (socket) => {
                     openurl = null;
                     io.emit("result", text, "URLを指定してください。")
                 }
+            break;
+
+
+
+            case !!text.match(/^useragent/):
+                let userAgent_arg = text.match(/\s+\/.+/);
+                try {
+                    userAgent_arg = userAgent_arg.toString();
+                    userAgent_arg = userAgent_arg.replace(/\s+/, "");
+                } catch (error) {
+                    io.emit("result", text, "引数を指定してください。")
+                    return;
+                }
+
+                if(userAgent_arg === "/log") {
+                    io.emit("result", text, userAgent);
+                } else if (userAgent_arg === "/now") {
+                    io.emit("result", text, null, ["userAgent"]);
+                } else {
+                    io.emit("result", text, `${userAgent_arg}は無効な引数です。`);
+                }
+            break;
+
+            case !!text.match(/^commandhistory/):
+                io.emit("result", text, null, ["commandhistory"]);
+            break;
+
+            case !!text.match(/^savehistory\s*$/):
+                io.emit("result", text, "コマンドの履歴を保存しました。", ["savehistory"])
             break;
                 
             default:
