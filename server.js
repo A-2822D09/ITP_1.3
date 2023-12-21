@@ -47,8 +47,6 @@ io.on("connection", (socket) => {
                 }
             break;
 
-
-
             case !!text.match(/^eval/):
                 let evalText = text.match(/\`.+\`/);
                 let evalarg = text.match(/ \/.+$/)
@@ -82,8 +80,6 @@ io.on("connection", (socket) => {
 
             break;
 
-
-
             case !!text.match(/^echo/):
                 let echotext = text.match(/\`.+\`/);
                 try {
@@ -99,7 +95,6 @@ io.on("connection", (socket) => {
                 }
             break;
 
-
             case !!text.match(/^reload\s*$/):
                 if(text.match(/^reload$/)){
                     io.emit("result", text, null, ["reload"]);
@@ -109,8 +104,6 @@ io.on("connection", (socket) => {
                     io.emit("result", text, `'${text}'はコマンドとして認識されていません。`);
                 }
             break;
-
-
 
             case !!text.match(/^bgcolor/):
                 let bgcolorval = text.match(/ #[0-9A-Fa-f]{3}$/);
@@ -124,8 +117,6 @@ io.on("connection", (socket) => {
                     io.emit("result", text, `背景色は${bgcolorval}に変更されました。`, ["bgcolor", bgcolorval]);
             break;
 
-
-
             case !!text.match(/^color/):
                 let colorval = text.match(/ #[0-9A-Fa-f]{3}$/);
                 try {
@@ -137,8 +128,6 @@ io.on("connection", (socket) => {
                 }
                 io.emit("result", text, `文字色は${colorval}に変更されました。`, ["color", colorval]);
             break;
-
-
 
             case !!text.match(/^help\s*$/):
                 let help = [
@@ -154,7 +143,7 @@ io.on("connection", (socket) => {
                     "commandindex | コマンドの一覧を開きます。",
                     "help `<URL>` | 入力されたURLを開きます。",
                     "useragent /<arguments> | ユーザーエージェントを表示します。",
-                    "commandindex | コマンドの履歴を表示します。",
+                    "commandhistory | コマンドの履歴を表示します。",
                     "savehistory | コマンドの履歴を保存します。"
                 ]
             
@@ -169,8 +158,6 @@ io.on("connection", (socket) => {
                 }
 
             break;
-
-
 
             case !!text.match(/^encode/):
                 let encodeText = text.match(/\`.+\`/);
@@ -213,8 +200,6 @@ io.on("connection", (socket) => {
 
             break;
 
-
-
             case !!text.match(/^decode/):
                 let decodeText = text.match(/\`.+\`/);
                 let decodearg = text.match(/ \/.+$/);
@@ -255,13 +240,9 @@ io.on("connection", (socket) => {
                 }
             break;
 
-
-
             case !!text.match(/^commandindex\s*$/):
                 io.emit("result", text, "コマンドの一覧を開きました。", ["cmdindex"]);
             break;
-
-
 
             case !!text.match(/^open/):
                 let openurl = text.match(/\`.+\`/);
@@ -274,8 +255,6 @@ io.on("connection", (socket) => {
                     io.emit("result", text, "URLを指定してください。")
                 }
             break;
-
-
 
             case !!text.match(/^useragent/):
                 let userAgent_arg = text.match(/\s+\/.+/);
